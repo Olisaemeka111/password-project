@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - passwords_data:/app
+    environment:
+      FLASK_ENV: development
+    restart: always
+
+volumes:
+  passwords_data:
