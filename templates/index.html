@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 50px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .password-list {
+            margin-top: 20px;
+            display: none;
+            text-align: left;
+            padding: 20px;
+            background-image: url('/static/vecteezy_banner-background-full-color-blue-and-black-gradations_17396302.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 10px;
+        }
+
+        .scrolling-message {
+            font-weight: bold;
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            z-index: 2;
+            color: #FFD700;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 0;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .scrolling-message span {
+            display: inline-block;
+            animation: scrolling 10s linear infinite;
+        }
+
+        @keyframes scrolling {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+    <script>
+        function togglePasswordList() {
+            var passwordList = document.getElementById("password-list");
+            if (passwordList.style.display === "none") {
+                fetch('/list_passwords', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        master_password: document.getElementById("list-master-password").value
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        passwordList.innerHTML = '';
+                        for (let service in data) {
+                            passwordList.innerHTML += `<p><strong>${service}:</strong> ${data[service]}</p>`;
+                        }
+                        passwordList.style.display = "block";
+                    });
+            } else {
+                passwordList.style.display = "none";
+            }
+        }
+    </script>
+</head>
+
+<body>
+<video autoplay muted loop class="video-bg">
+    <source src="{{ url_for('static', filename='videos/istockphoto-1255754954-640_adpp_is.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<div class="container">
+    <h1>Password Manager</h1>
+    <form method="post" action="/add_password">
+        <input type="text" name="service" placeholder="Service Name" required>
+        <input type="password" name="master_password" placeholder="Master Password" required>
+        <button type="submit">Add Password</button>
+    </form>
+    <form method="post" action="/get_password">
+        <input type="text" name="service" placeholder="Service Name" required>
+        <input type="password" name="master_password" placeholder="Master Password" required>
+        <button type="submit">Get Password</button>
+    </form>
+    <form id="list-passwords-form">
+        <input type="password" id="list-master-password" placeholder="Master Password" required>
+        <button type="button" onclick="togglePasswordList()">List Passwords</button>
+    </form>
+    <div id="password-list" class="password-list"></div>
+</div>
+
+<div class="scrolling-message">
+    <span>Designed by Olisa Arinze in August 2024 </span>
+</div>
+</body>
+
+</html>

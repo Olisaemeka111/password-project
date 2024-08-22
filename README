@@ -1,0 +1,62 @@
+**Plan:**
+1. Create a directory structure diagram.
+2. Write a README file that includes:
+   - Project title
+   - Description
+   - Directory structure
+   - Installation instructions
+   - Usage instructions
+
+```markdown
+# Password Manager
+
+## Description
+This is a simple password manager application that allows you to securely store and retrieve passwords. The application uses encryption to protect your passwords and requires a master password to access them.
+
+## Directory Structure
+```
+/app
+  ├── static
+  │   └── background.jpg
+  ├── templates
+  │   └── index.html
+  ├── password.py
+  ├── salt.txt
+  ├── passwords.enc
+  └── Dockerfile
+```
+
+## Installation
+
+1. **Clone the repository:**
+   ```sh
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
+
+2. **Build the Docker image:**
+   ```sh
+   docker build -t password-manager .
+   ```
+
+3. **Run the Docker container:**
+   ```sh
+   docker run -p 80:80 password-manager
+   ```
+
+## Usage
+
+1. **Access the application:**
+   Open your web browser and go to `http://localhost`.
+
+2. **Add a new password:**
+   - Enter the service name and master password.
+   - Click on "Add Password".
+
+3. **Retrieve a password:**
+   - Enter the service name and master password.
+   - Click on "Get Password".
+
+4. **Exit the application:**
+   - Stop the Docker container by pressing `Ctrl+C` in the terminal where the container is running.
+```
