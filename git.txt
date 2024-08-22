@@ -5,7 +5,7 @@ Next command to do (1 remaining command):
    pick dfc0ad5 First code commit
   (use "git rebase --edit-todo" to view and edit)
 You are currently rebasing branch 'master' on 'ae184bc'.
-  (fix conflicts and then run "git rebase --continue")
+  (fix conflicts and then run "git rebase --continue")a
   (use "git rebase --skip" to skip this patch)
   (use "git rebase --abort" to check out the original branch)
 
